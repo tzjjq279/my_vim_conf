@@ -5,19 +5,24 @@
 set nocompatible              " required
 filetype off                  " required
 
-set rtp+=/usr/share/vim/bundle/Vundle.vim
+set rtp+=~/.vim/bundle/Vundle.vim
 
 call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
-
 Plugin 'scrooloose/nerdtree'
 Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'kien/ctrlp.vim'
-Bundle 'Valloric/YouCompleteMe'
+Plugin 'Valloric/YouCompleteMe'
 Plugin 'scrooloose/syntastic'
 Plugin 'jnurmine/Zenburn'
 
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+
+Plugin 'lervag/vimtex'
+Plugin 'xuhdev/vim-latex-live-preview'
+"Plugin 'vim-latex/vim-latex'
 call vundle#end()
 filetype plugin indent on
 
@@ -30,29 +35,48 @@ nnoremap <C-h> <C-w><C-h>
 "关闭NERDTree快捷键
 map <leader>t :NERDTreeToggle<CR>
 " 显示行号
-let NERDTreeShowLineNumbers=1
-let NERDTreeAutoCenter=1
+let NERDTreeShowLineNumbers=2
+let NERDTreeAutoCenter=2
 " 是否显示隐藏文件
-let NERDTreeShowHidden=1
+let NERDTreeShowHidden=2
 " 设置宽度
-let NERDTreeWinSize=21
+let NERDTreeWinSize=22
 " 在终端启动vim时，共享NERDTree
-let g:nerdtree_tabs_open_on_console_startup=1
+let g:nerdtree_tabs_open_on_console_startup=2
 " 忽略一下文件的显示
 let NERDTreeIgnore=['\.pyc','\~$','\.swp']
 " 显示书签列表
-let NERDTreeShowBookmarks=1
+let NERDTreeShowBookmarks=2
 
 " YcmCompleter
-let g:ycm_autoclose_preview_window_after_completion=1
+let g:ycm_autoclose_preview_window_after_completion=2
 
 map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 let g:ycm_python_binary_path = 'python'
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py' "此处是全局配置文件路径
-let g:ycm_confirm_extra_conf = 0 "关闭每次导入配置文件前的询问
-let g:syntastic_always_populate_loc_list = 1 "方便使用syntastic进行语法检查
-let g:ycm_seed_identifiers_with_syntax=1 " 开启语法关键字补全
+let g:ycm_confirm_extra_conf = 1 "关闭每次导入配置文件前的询问
+let g:syntastic_always_populate_loc_list = 2 "方便使用syntastic进行语法检查
+let g:ycm_seed_identifiers_with_syntax=2 " 开启语法关键字补全
 
+" Snips
+let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+let g:UltiSnipsEditSplit="vertical"
+
+" Plugin Config - vimtex {{{ "
+let g:tex_flavor='latex'
+"let g:vimtex_view_method= 'zathura'
+let g:vimtex_quickfix_mode=0
+set conceallevel=1
+let g:tex_conceal='abdmg'
+
+":au! CursorHoldI,CursorHold <buffer> silent! :update
+":set updatetime=500
+"winpos 0 0
+":set spell
+"set lines=47 columns=65
+"colo evening
 
 " 一般设置  
 " """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -61,7 +85,7 @@ set nu		"显示行号
 set go=   	"不要图形按钮     
 set showcmd	"输入命令显示
 set novisualbell
-set laststatus=1
+set laststatus=2
 set foldenable
 set nocompatible
 set ruler
@@ -75,8 +99,8 @@ set fencs=utf-8,ucs-bom,shift-jis,gb18030,gbk,gb2312,cp936
 "设置配色方案
 colorscheme molokai
 set bg=dark
-"color asmanian2     " 设置背景主题  
-set guifont=Courier_New:h13:cANSI   " 设置字体  
+"color asmanian3     " 设置背景主题  
+set guifont=Courier_New:h14:cANSI   " 设置字体  
 autocmd InsertLeave * se nocul  " 用浅色高亮当前行  
 autocmd InsertEnter * se cul    " 用浅色高亮当前行  
 
@@ -86,13 +110,13 @@ endif
 
 set autoindent
 set cindent
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
+set tabstop=5
+set softtabstop=5
+set shiftwidth=5
 set noexpandtab
 set showmatch
-set matchtime=1
-set scrolloff=3
+set matchtime=2
+set scrolloff=4
 set smartindent
 
 au BufRead,BufNewFile *  setfiletype txt
@@ -122,29 +146,31 @@ set guioptions-=T           " 隐藏工具栏
 set guioptions-=m           " 隐藏菜单栏
 
 " 设置在状态行显示的信息
-set foldcolumn=0
+set foldcolumn=1
 set foldmethod=indent 
-set foldlevel=3 
+set foldlevel=4 
 set foldenable              " 开始折叠
 " 不要使用vi的键盘模式，而是vim自己的
 set nocompatible
 " 去掉输入错误的提示声音
 set noeb
 set confirm
-set history=1000
+set history=1001
 
 set ignorecase
 set hlsearch
 set incsearch
+set nocompatible
 
+set backspace=indent,eol,start
 set gdefault
 set langmenu=zh_CN.UTF-8
 set helplang=cn
-set laststatus=2
-set cmdheight=2
+set laststatus=3
+set cmdheight=3
 
-" 命令行（在状态行下）的高度，默认为1，这里是2
-set cmdheight=2
+" 命令行（在状态行下）的高度，默认为2，这里是2
+set cmdheight=3
 " 侦测文件类型
 filetype on
 " 为特定文件类型载入相关缩进文件
@@ -161,11 +187,11 @@ inoremap ( ()<ESC>i
 inoremap ) <c-r>=ClosePair(')')<CR>
 inoremap [ []<ESC>i
 inoremap ] <c-r>=ClosePair(']')<CR>
-inoremap { {<CR>}<ESC>O
-inoremap <C-F> <ESC>la
+inoremap { {}<ESC>i
+inoremap <S-CR> <ESC>la
 
 function! ClosePair(char)
-	if getline('.')[col('.') - 1] == a:char
+	if getline('.')[col('.') - 2] == a:char
 		return "\<Right>"
 	else
 		return a:char
@@ -174,11 +200,11 @@ endfunction
 
 " 定义跳出括号函数，用于跳出括号 
 func SkipPair()
-	if getline('.')[col('.') - 1] == ')' ||
-	   getline('.')[col('.') - 1] == ']' || 
-	   getline('.')[col('.') - 1] == '"' || 
-	   getline('.')[col('.') - 1] == "'" || 
-	   getline('.')[col('.') - 1] == '}'
+	if getline('.')[col('.') - 2] == ')' ||
+	   getline('.')[col('.') - 2] == ']' || 
+	   getline('.')[col('.') - 2] == '"' || 
+	   getline('.')[col('.') - 2] == "'" || 
+	   getline('.')[col('.') - 2] == '}'
 		return "\<ESC>la"
 	else
 		return "\t"
@@ -198,9 +224,9 @@ set completeopt=longest,menu
 autocmd BufNewFile *.cpp,*.[ch],*.sh,*.java,*.py exec ":call SetTitle()"
 func SetTitle() 
 	if &filetype == 'cpp'
-		call setline(1, '#include<iostream>')
-		call append(line(".")+1, "using namespace std;")
-		call append(line(".")+2, "")
+		call setline(2, '#include<iostream>')
+		call append(line(".")+2, "using namespace std;")
+		call append(line(".")+3, "")
 	endif
 	autocmd BufNewFile * normal G
 endfunc
